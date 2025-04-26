@@ -4,53 +4,95 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prática Tailwind</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-
+    
     .card {
-      max-width: 300px;
+      max-width: 350px;
       background-color: white;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      border-radius: 0.75rem;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 1rem;
       padding: 1.5rem;
       text-align: center;
       margin: 0 auto;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     }
 
     .avatar {
-      width: 6rem;
-      height: 6rem;
-      border-radius: 9999px;
-      margin-bottom: 1rem;
+      width: 7rem;
+      height: 7rem;
+      border-radius: 50%;
+      margin-bottom: 1.25rem;
+      border: 4px solid #38bdf8;
     }
 
     .name {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 0.75rem;
     }
 
     .bio {
-      color: gray;
+      font-size: 1rem;
+      color: #4a5568;
+      margin-bottom: 1.5rem;
+    }
+
+    .button {
+      padding: 0.75rem 2rem;
+      background-color: #38bdf8;
+      color: white;
+      font-weight: 600;
+      border-radius: 9999px;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #0ea5e9;
+    }
+
+    body {
+      background: linear-gradient(to right, #6ee7b7, #38bdf8);
+      font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
   </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body>
 
-  <div class="card">
-    <img id="avatar" src="" alt="Avatar" class="avatar">
-    <h2 id="name" class="name">Carregando...</h2>
-    <p id="bio" class="bio">Carregando biografia...</p>
+  <div class="container">
+    <div class="card">
+      <img id="avatar" src="" alt="Avatar" class="avatar">
+      <h2 id="name" class="name">Carregando...</h2>
+      <p id="bio" class="bio">Carregando biografia...</p>
+      <a href="" id="githubLink" target="_blank" class="button">Visitar GitHub</a>
+    </div>
   </div>
 
   <script>
     async function fetchProfile() {
-      const username = 'Msconrrado';
+      const username = 'Msconrrado'; 
       const response = await fetch(`https://api.github.com/users/${username}`);
       const data = await response.json();
 
       document.getElementById('avatar').src = data.avatar_url;
       document.getElementById('name').textContent = data.name || data.login;
       document.getElementById('bio').textContent = data.bio || "Sem biografia.";
+      document.getElementById('githubLink').href = data.html_url;
     }
 
     fetchProfile();
